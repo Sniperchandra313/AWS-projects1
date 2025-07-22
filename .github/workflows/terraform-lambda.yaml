@@ -2,9 +2,9 @@ name: Terraform Lambda CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ new ]
   pull_request:
-    branches: [ main ]
+    branches: [ new ]
 
 jobs:
   terraform:
