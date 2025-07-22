@@ -1,7 +1,7 @@
 provider "aws" {
   region = "us-east-1"  # Change region as needed
-  access_key = "AKIA4LQJRLXSVKKDZLIJ"
-  secret_key = "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"
+  #2access_key = "AKIA4LQJRLXSVKKDZLIJ"
+  #secret_key = "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"
 }
 
 resource "aws_iam_role" "lambda_exec_role" {
