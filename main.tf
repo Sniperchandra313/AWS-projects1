@@ -12,7 +12,7 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::849349795301:role/tf-cloud-role1"
+    role_arn = "arn:aws:iam::849349795301:role/tf-cloud-role"
   }
 }
 
