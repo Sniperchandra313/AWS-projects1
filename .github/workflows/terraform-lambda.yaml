@@ -4,7 +4,7 @@ on:
   push:
     branches: [ ec2 ]
   pull_request:
-    branches: [ new ]
+    branches: [ ec2 ]
 
 jobs:
   terraform:
@@ -48,4 +48,4 @@ jobs:
         run:  sleep 60
         
       - name: Terraform Destroy
-        run: terraform destroy    
+        run: terraform destroy -auto-approve
