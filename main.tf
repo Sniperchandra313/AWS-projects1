@@ -1,3 +1,13 @@
+terraform { 
+  cloud { 
+    
+    organization = "Sniperchandra313" 
+
+    workspaces { 
+      name = "TF-workspace" 
+    } 
+  } 
+}
 provider "aws" {
   region = "us-east-1"  # Change region as needed
   #2access_key = ""
