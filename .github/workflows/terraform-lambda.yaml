@@ -21,5 +21,9 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.8.5
+
+      - name: Terraform Delete
+        run: terraform init
+        
       - name: Terraform Delete
         run: terraform destroy -auto-approve
