@@ -5,8 +5,8 @@ provider "aws" {
  
 }
 
-resource "aws_iam_role" {
-  name = "lambda_exec_role"
+resource "aws_iam_role" "lambda_exec_role"{
+  name = "lambda_exec_role1"
 
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
