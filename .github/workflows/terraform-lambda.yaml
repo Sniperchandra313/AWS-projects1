@@ -17,11 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -31,18 +26,6 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt || true
-
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Validate
-        run: terraform validate
-
-      - name: Terraform Plan
-        run: terraform plan
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-
+          
       - name: Terraform Delete
         run: terraform destroy 
