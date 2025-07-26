@@ -9,15 +9,57 @@ resource "aws_iam_role" "lambda_exec_role" {
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "lambda.amazonaws.com"
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:DescribeStacks",
+                "cloudformation:ListStackResources",
+                "cloudwatch:ListMetrics",
+                "cloudwatch:GetMetricData",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeVpcs",
+                "kms:ListAliases",
+                "iam:GetPolicy",
+                "iam:GetPolicyVersion",
+                "iam:GetRole",
+                "iam:GetRolePolicy",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRolePolicies",
+                "iam:ListRoles",
+                "lambda:*",
+                "logs:DescribeLogGroups",
+                "states:DescribeStateMachine",
+                "states:ListStateMachines",
+                "tag:GetResources",
+                "xray:GetTraceSummaries",
+                "xray:BatchGetTraces"
+            ],
+            "Resource": "*"
         },
-        "Action": "sts:AssumeRole"
-      }
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+"iam:PassedToService": "lambda.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:DescribeLogStreams",
+                "logs:GetLogEvents",
+                "logs:FilterLogEvents",
+                "logs:StartLiveTail",
+                "logs:StopLiveTail"
+            ],
+            "Resource": "arn:aws:logs:*:*:log-group:/aws/lambda/*"
+        }
     ]
-  })
+})
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
