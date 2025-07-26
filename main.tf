@@ -8,7 +8,7 @@ terraform {
     organization = "Sniperchandra313" 
 
     workspaces { 
-      name = "TF-workspace" 
+      name = "TF-workspace1" 
     } 
   } 
 }
