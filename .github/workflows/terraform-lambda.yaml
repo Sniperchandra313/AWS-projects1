@@ -2,7 +2,7 @@ name: Terraform Lambda CI/CD
 
 on:
   push:
-    branches: [ new ]
+    branches: [ ChatGPT-test ]
   pull_request:
     branches: [ new ]
 
