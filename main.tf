@@ -1,7 +1,6 @@
 provider "aws" {
   region = "us-east-1"  # Change region as needed
-  access_key = "AKIA4LQJRLXSVKKDZLIJ"
-  secret_key = "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"
+ 
 }
 
 resource "aws_iam_role" "lambda_exec_role" {
@@ -10,15 +9,58 @@ resource "aws_iam_role" "lambda_exec_role" {
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "lambda.amazonaws.com"
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:DescribeStacks",
+                "cloudformation:ListStackResources",
+                "cloudwatch:ListMetrics",
+                "cloudwatch:GetMetricData",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeVpcs",
+                "kms:ListAliases",
+                "iam:GetPolicy",
+                "iam:GetPolicyVersion",
+                "iam:CreateRole",
+                "iam:GetRole",
+                "iam:GetRolePolicy",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRolePolicies",
+                "iam:ListRoles",
+                "lambda:*",
+                "logs:DescribeLogGroups",
+                "states:DescribeStateMachine",
+                "states:ListStateMachines",
+                "tag:GetResources",
+                "xray:GetTraceSummaries",
+                "xray:BatchGetTraces"
+            ],
+            "Resource": "*"
         },
-        "Action": "sts:AssumeRole"
-      }
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+"iam:PassedToService": "lambda.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:DescribeLogStreams",
+                "logs:GetLogEvents",
+                "logs:FilterLogEvents",
+                "logs:StartLiveTail",
+                "logs:StopLiveTail"
+            ],
+            "Resource": "arn:aws:logs:*:*:log-group:/aws/lambda/*"
+        }
     ]
-  })
+})
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
