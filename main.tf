@@ -4,7 +4,7 @@ provider "aws" {
 
 # Create an S3 bucket to store the Lambda zip
 resource "aws_s3_bucket" "lambda_bucket" {
-  bucket = "my-unique-lambda-bucket-123456" # Replace with a globally unique name
+  bucket = "my-unique-lambda-bucket-123456bugfbusbef" # Replace with a globally unique name
   force_destroy = true
 }
 
