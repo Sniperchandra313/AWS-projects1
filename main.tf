@@ -1,6 +1,7 @@
-provider "aws" {
+provider "aws" {Code has comments. Press enter to view.
   region = "us-east-1"  # Change region as needed
- 
+  access_key = "AKIA4LQJRLXSVKKDZLIJ"
+  secret_key = "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"
 }
 
 resource "aws_iam_role" "lambda_exec_role" {
@@ -9,12 +10,15 @@ resource "aws_iam_role" "lambda_exec_role" {
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "*",
-            "Resource":"*"
-})
-]
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "lambda.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
