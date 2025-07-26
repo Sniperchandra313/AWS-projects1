@@ -23,7 +23,7 @@ resource "aws_iam_role" "lambda_exec_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
-  #role       = aws_iam_role.lambda_exec_role.name
+  role       = aws_iam_role.lambda_exec_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
@@ -38,7 +38,8 @@ resource "aws_lambda_function" "hello_lambda" {
   filename      = data.archive_file.lambda_zip.output_path
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.11"
-  role          = aws_iam_role.lambda_exec_role.arn
+  role          = aws_iam_role.lambda_exec_role.name
+ #role          = aws_iam_role.lambda_exec_role.arn
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   depends_on   = [data.archive_file.lambda_zip]
 }
