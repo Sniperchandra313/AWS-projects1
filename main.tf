@@ -22,6 +22,7 @@ resource "aws_iam_role" "lambda_exec_role" {
                 "kms:ListAliases",
                 "iam:GetPolicy",
                 "iam:GetPolicyVersion",
+                "iam:CreateRole",
                 "iam:GetRole",
                 "iam:GetRolePolicy",
                 "iam:ListAttachedRolePolicies",
