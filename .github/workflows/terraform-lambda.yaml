@@ -2,7 +2,7 @@ name: Terraform Lambda CI/CD
 
 on:
   push:
-    branches: [ ChatGPT-test ]
+    branches: [ Destroy ]
   pull_request:
     branches: [ new ]
 
@@ -44,3 +44,6 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+
+      - name: Terraform Delete
+        run: terraform destroy -auto-approve  
