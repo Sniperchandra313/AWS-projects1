@@ -10,8 +10,9 @@ terraform {
 }
 provider "aws" {
   region = "us-east-1"  # Change region as needed
-  #2access_key = ""
-  #secret_key = ""
+  assume_role {
+   role_arn     = "arn:aws:iam::ACCOUNT_ID:role/tf-cloud-role"  # From Step 1
+ }
  
 }
 
