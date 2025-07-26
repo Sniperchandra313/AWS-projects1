@@ -1,33 +1,33 @@
-terraform { 
-  cloud { 
-    
-    organization = "Sniperchandra313" 
+terraform {
+  cloud {
+    organization = "Sniperchandra313"
 
-    workspaces { 
-      name = "TF-workspace" 
-    } 
-  } 
+    workspaces {
+      name = "TF-workspace"
+    }
+  }
 }
+
 provider "aws" {
-  region = "us-east-1"  # Change region as needed
+  region = "us-east-1"
+
   assume_role {
-   role_arn     = "arn:aws:iam::849349795301:role/tf-cloud-role1"  # From Step 1
- }
- 
+    role_arn = "arn:aws:iam::849349795301:role/tf-cloud-role1"
+  }
 }
 
-resource "aws_iam_role" "lambda_exec_role"{
+resource "aws_iam_role" "lambda_exec_role" {
   name = "lambda_exec_role1"
 
   assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
+    Version = "2012-10-17",
+    Statement = [
       {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "lambda.amazonaws.com"
+        Effect = "Allow",
+        Principal = {
+          Service = "lambda.amazonaws.com"
         },
-        "Action": "sts:AssumeRole"
+        Action = "sts:AssumeRole"
       }
     ]
   })
@@ -40,16 +40,19 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_file = "lambda_function.py"
-  output_path = "function.zip"
+  source_file = "${path.module}/lambda_function.py"
+  output_path = "${path.module}/function.zip"
 }
 
 resource "aws_lambda_function" "hello_lambda" {
-  function_name = "hello_lambda"
-  filename      = data.archive_file.lambda_zip.output_path
-  handler       = "lambda_function.lambda_handler"
-  runtime       = "python3.11"
-  role          = aws_iam_role.lambda_exec_role.arn
+  function_name    = "hello_lambda"
+  filename         = data.archive_file.lambda_zip.output_path
+  handler          = "lambda_function.lambda_handler"
+  runtime          = "python3.11"
+  role             = aws_iam_role.lambda_exec_role.arn
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-  depends_on   = [data.archive_file.lambda_zip]
+
+  depends_on = [
+    aws_iam_role_policy_attachment.lambda_basic_execution
+  ]
 }
